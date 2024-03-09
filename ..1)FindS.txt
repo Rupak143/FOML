@@ -1,0 +1,31 @@
+import numpy as np
+
+# Define the Enjoy Sport dataset
+data = np.array([
+    ['Japan','Honda', 'Blue', '1980', 'Economy', 'Positive'],
+    ['Japan','Toyota', 'Green', '1970', 'Sports',  'Negative'],
+    ['Japan','Toyota', 'Blue', '1990', 'Economy',  'Positive'],
+    ['USA','Chrysler', 'Red', '1980', 'Economy', 'Negative'],
+    ['Japan','Honda', 'White', '1980', 'Economy', 'Positive'],
+])
+
+def find_s_algorithm(data):
+    # Initialize the hypothesis with the most specific hypothesis possible
+    hypothesis = ['0'] * (len(data[0]) - 1)  # Initialize with all attributes as '0'
+    
+    # Iterate over each training example in the dataset
+    for example in data:
+        if example[-1] == 'Yes':  # If the example is positive
+            for i in range(len(example)-1):  # Iterate over attributes
+                if hypothesis[i] == '0':
+                    hypothesis[i] = example[i]  # Assign attribute value if it's not set yet
+                elif hypothesis[i] != example[i]:
+                    hypothesis[i] = '?'  # Set to '?' if there's a mismatch
+                    
+    return hypothesis
+
+# Apply the Find-S algorithm to the Enjoy Sport dataset
+hypothesis = find_s_algorithm(data)
+
+# Output the final hypothesis
+print("Final hypothesis:", hypothesis)
